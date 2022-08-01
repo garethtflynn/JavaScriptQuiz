@@ -34,6 +34,7 @@ body {
 .question {
     margin-bottom: 10px;
 }
+
 .btn-grid {
     display: grid;
     
@@ -69,6 +70,10 @@ body {
     margin-bottom: 25px;
 }
 
+.your-score {
+    display: flex;
+    justify-content: center;
+}
 .btn:hover {
     opacity: 50%;
 }
