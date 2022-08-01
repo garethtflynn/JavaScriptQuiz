@@ -28,6 +28,7 @@ body {
 .timer {
     text-align: center;
     font-size: 30px;
+    margin-bottom: 25px;
 }
 
 .question {
@@ -48,6 +49,24 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 10px;
+}
+
+.score-sheet {
+    display: flex;
+    justify-content: center;
+    color:black;
+}
+
+.name {
+    color: whitesmoke; 
+
+}
+
+.highscore-header {
+    color: whitesmoke; 
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
 }
 
 .btn:hover {

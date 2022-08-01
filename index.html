@@ -22,11 +22,11 @@
     <div class="quiz-box"> 
         <div id="question-box" class="hide">
             <div id="question" class='question'>Question:</div>
-            <div id="answer" class="btn-grid">
-                <button id="a" class="answer-1 btn">Answer 1</button>
-                <button id='b' class="answer-2 btn">Answer 2</button>
-                <button id='c' class="answer-3 btn">Answer 3</button>
-                <button id='d' class="answer-4 btn">Answer 4</button>
+            <div id="answers" class="btn-grid">
+                <button  class="answer btn" data-number="1">Answer 1</button>
+                <button  class="answer btn" data-number="2">Answer 2</button>
+                <button  class="answer btn" data-number="3">Answer 3</button>
+                <button  class="answer btn" data-number="4">Answer 4</button>
             </div>
         </div>    
         <div class="controls">
@@ -35,6 +35,14 @@
                 </button>
             </div>
         </div>
+    </div>
+    <div>
+    <h1 id='score-header'class="highscore-header hide">Highscores</h1>
+    </div>
+    <div id='scoreSheet'class="score-sheet hide">
+        <label id='name' for="Name"><span class="name"> Name: </span> </label>
+        <input type="text"  placeholder="Name" />
+        <button id='submit-btn' class="btn submit-btn">submit</button>
     </div>
   </main>
 </body>
