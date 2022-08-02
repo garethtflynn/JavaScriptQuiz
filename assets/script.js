@@ -130,10 +130,10 @@ function nextQuestion () {
     
     //else answer is incorrect deduct 5 seconds from timer
     function wrongAnswer () {
-        nextQuestion()
+        
         timer = timeLeft - 5; 
+        nextQuestion()
     }
-
 
 function scorePage() {
     startBtn.classList.add('hide')
