@@ -21,7 +21,7 @@ const questions = [
             answer: 1,
     },
     {
-        question: "What is JavaScript mainly used for?", //
+        question: "What is JavaScript mainly used for?", 
             choice1: 'Making coffee',
             choice2: "Creating dynamic and interactive applications", //
             choice3: "Both", 
@@ -56,14 +56,16 @@ const questions = [
 ]
 
 startBtn.addEventListener('click', startGame)
-answers.addEventListener('click', nextQuestion) 
+answers.addEventListener('click', nextQuestion)
+
 
 // let currentQuestion = {}
 // let availableQuestion = []
 let score = 0 
-let questionCounter = 0
+let questionNumber = 0
 
 MAX_QUESTIONS = 5
+MY_SCORE = 0
 
 function startGame (){
     startBtn.classList.add('hide')
@@ -102,9 +104,9 @@ function timer () {
 }
 
 function nextQuestion () {
+    questionNumber ++
     const questionIndex = Math.floor(Math.random() * availableQuestion.length)
     currentQuestion = availableQuestion[questionIndex]
-    console.log(availableQuestion)
     questionText.innerText = currentQuestion.question;
 
     choices.forEach(choice => {
@@ -112,25 +114,26 @@ function nextQuestion () {
         choice.innerText = currentQuestion['choice' + number];
     });
     
-    if (availableQuestion.length === 0 || questionCounter >= MAX_QUESTIONS) {
+    if (availableQuestion.length === 0 || questionNumber >= MAX_QUESTIONS) {
         return (scorePage())
     }
-
+    
+    
     availableQuestion.splice(questionIndex, 1);
-
+    }
     // if answer is correct add one point out of 5 to score then post that score in h1 at end page
-
+    
+    function correctAnswer() {
+        MY_SCORE ++
+    }
     
     
     //else answer is incorrect deduct 5 seconds from timer
+    function wrongAnswer () {
+        nextQuestion()
+        timer = timeLeft - 5; 
+    }
 
-
-}
-
-// deduct 5 seconds when wrong answer is chosen
-function wrongAnswer () {
-
-}
 
 function scorePage() {
     startBtn.classList.add('hide')
