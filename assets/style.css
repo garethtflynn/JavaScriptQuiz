@@ -31,6 +31,15 @@ body {
     margin-bottom: 25px;
 }
 
+.intro-blurb {
+    padding: 50px;
+}
+
+.quiz-box {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 .question {
     margin-bottom: 10px;
 }
@@ -44,15 +53,24 @@ body {
     background-color: rgb(173, 153, 128);
     margin: 5px;
     border-radius: 5px;
+	padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .start-btn { 
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    
 }
 
-.score-sheet {
+.scoreSheetContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: whitesmoke; 
+}
+
+.userNameContainer {
     display: flex;
     justify-content: center;
     color:black;
@@ -76,6 +94,22 @@ body {
 }
 .btn:hover {
     opacity: 50%;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.endText {
+    color: whitesmoke; 
+}
+
+.endTextContainer {
+    display: flex;
+    justify-content: center;
 }
 
 .hide {

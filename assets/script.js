@@ -5,150 +5,201 @@ var answers = document.getElementById('answers')
 var introRules = document.getElementById('intro')
 var title = document.getElementById('title')
 var questionText = document.getElementById('question')
-var scoreSheet = document.getElementById('scoreSheet')
+var scoreSheet = document.getElementById('scoreSheetContainer')
 var scoreHeader = document.getElementById('score-header')
 var submitBtn = document.getElementById('submit-btn')
 var yourScore = document.getElementById('your-score')
-var choices = Array.from(document.getElementsByClassName('answer'))
+var nameInput = document.getElementById('userNameContainer')
+var choiceA = document.querySelector("#a");
+var choiceB = document.querySelector("#b");
+var choiceC = document.querySelector("#c");
+var choiceD = document.querySelector("#d");
+var choiceArr = [choiceA, choiceB, choiceC, choiceD]
+var viewHighscoresBtn = document.querySelector('#viewHighscores')
+var introPage = document.querySelector('#intro')
+var progressText = document.querySelector("#progress");
+var controlBtns = document.querySelector('#controls')
+var quizBox = document.querySelector("#quizBox");
+var scorePage = document.querySelector("#scorePage")
+var options = document.querySelector("#options")
+var highScores =[]
+var timeLeft = 60;
 
+let questionIndex = 0
 const questions = [
     {
         question: "Inside which HTML element do we put the JavaScript?",
-            choice1: '<script>', //
-            choice2: "<js>", 
-            choice3: "<scripting>", 
-            choice4: "<javascript>", 
-            answer: 1,
+        choices: ['<script>',"<js>", "<scripting>","<javascript>"],
+        answer: "<script>"
     },
     {
         question: "What is JavaScript mainly used for?", 
-            choice1: 'Making coffee',
-            choice2: "Creating dynamic and interactive applications", //
-            choice3: "Both", 
-            choice4: "It scripts stuff", 
-            answer: 2,
+        choices: ['Making coffee', "Creating dynamic and interactive applications", "Both", "It scripts stuff"],
+        answer: "Creating dynamic and interactive applications",
     },
     {
         question: "How do you create a function in JavaScript?",
-            choice1: "function myFunction()", //
-            choice2: "function:myFunction()>", 
-            choice3: "function = myFunction()>", 
-            choice4: "createFunction () ", 
-            answer: 1,  
+        choices: ["function myFunction()","function:myFunction()>","function = myFunction()>", "createFunction () "],
+        answer: "function myFunction()"   
     },
     {
         question: "What will the code return? Boolean(3 < 7)",
- 
-            choice1: "True", //
-            choice2: "false", 
-            choice3: "NaN",
-            choice4: "SyntaxError", 
-            answer: 1, 
+        choices:["True", "false", "NaN","SyntaxError"],   
+        answer: "True"
     },
     {
-        question: "Which of the following means 'does not equal?'", 
-            choice1: "=",
-            choice2: "<=",
-            choice3: "===", 
-            choice4: "!==", //
-            answer: 4,
+        question: "Which of the following means 'does not equal?'",
+        choices: ["=", "<=", "===", "!==",], 
+        answer: "!=="
     },
 ]
 
-startBtn.addEventListener('click', startGame)
-answers.addEventListener('click', nextQuestion)
-
-
-// let currentQuestion = {}
-// let availableQuestion = []
-let score = 0 
-let questionNumber = 0
-
-MAX_QUESTIONS = 5
-MY_SCORE = 0
-
-function startGame (){
-    startBtn.classList.add('hide')
-    introRules.classList.add('hide')
-    title.classList.add('hide')
-    questionBox.classList.remove('hide')
-    timerEl.classList.remove('hide')
-    score = 0
-    questionCounter = 0
-    availableQuestion = [...questions]
-
-
-    timer()
-    nextQuestion() 
-}
+function nextQuestion () {
+    console.log('game started')
+    questionText.textContent = questions[questionIndex].question;
+    for (var i = 0; i < choiceArr.length; i++) {
+        choiceArr[i].textContent = questions[questionIndex].choices[i];
+        choiceArr[i].onclick = function() {
+            if (questions[questionIndex].answer !== this.textContent){
+                (timeLeft = timeLeft - 10); 
+            }
+        questionIndex ++; 
+            if (questionIndex >= questions.length) {
+                endGame();
+            } else if (timeLeft <= 0) {
+                endGame();
+            } else {
+                nextQuestion();
+                progressText.textContent = (questionIndex + 1) + " of " + questions.length;
+            }
+        }
+    };
+};
 
 function timer () {
-    var timeLeft = 60;
-    
-    var timerInterval = setInterval(function(){
-        if (timeLeft > 1) {
-            timerEl.textContent = timeLeft + ' seconds remaining';
-            timeLeft--;
-          } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft + ' second remaining';
-            timeLeft--;
-          } 
-            else {
-            timerEl.textContent = '';
-            clearInterval(timerInterval);
-            return(scorePage())
-          }
-
-    }, 1000);
+    var timerInterval = setInterval(function() {
+        timeLeft--;
+        timerEl.textContent = "0:" + timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          endGame();
+          ;
+        }
+        if (timeLeft < 10) {
+          timerEl.textContent = "0:0" + timeLeft;
+        }
+      }, 1000);
     
 }
 
-function nextQuestion () {
-    questionNumber ++
-    const questionIndex = Math.floor(Math.random() * availableQuestion.length)
-    currentQuestion = availableQuestion[questionIndex]
-    questionText.innerText = currentQuestion.question;
-
-    choices.forEach(choice => {
-        const number = choice.dataset['number'];
-        choice.innerText = currentQuestion['choice' + number];
-    });
-    
-    if (availableQuestion.length === 0 || questionNumber >= MAX_QUESTIONS) {
-        return (scorePage())
-    }
-    
-    
-    availableQuestion.splice(questionIndex, 1);
-    }
-    // if answer is correct add one point out of 5 to score then post that score in h1 at end page
-    
-    function correctAnswer() {
-        MY_SCORE ++
-    }
-    
-    
-    //else answer is incorrect deduct 5 seconds from timer
-    function wrongAnswer () {
-        
-        timer = timeLeft - 5; 
-        nextQuestion()
+function endGame(){
+    clearInterval(timer);
+    if (timeLeft < 0) {
+        timeLeft = 0
     }
 
-function scorePage() {
-    startBtn.classList.add('hide')
-    introRules.classList.add('hide')
-    title.classList.add('hide')
-    questionBox.classList.add('hide')
-    timerEl.classList.add('hide')
-    scoreSheet.classList.remove('hide')
-    scoreHeader.classList.remove('hide')
-    yourScore.classList.remove('hide')
+    introPage.classList.add("hide");
+    quizBox.classList.add('hide')
+    scorePage.classList.remove('hide')
 
-    submitBtn.addEventListener('click', function(event){
-        event.preventDefault(); 
-        
-        var name = document.querySelector('#name').value
-        localStorage.setItem('name', name);
-    });
+    localStorage.setItem('score', JSON.stringify(timeLeft));
+    yourScore.textContent = localStorage.getItem("score")
+
 }
+
+//start button on home screen
+document.querySelector("#start-btn").onclick = function () {
+    timeLeft = 60;
+    questionNumber = 0;
+
+    introPage.classList.add("hide")
+    quizBox.classList.remove("hide")
+
+
+    nextQuestion();
+    timer();
+    progressText.textContent = (questionNumber + 1) + " / " + questions.length;
+}
+
+//view Highscores button on home screen
+document.querySelector("#viewHighscores").onclick = function (event) {
+    console.log('viewHighscores btn pressed')
+    event.preventDefault();
+
+    quizBox.classList.add('hide')
+    introPage.classList.add('hide')
+    controlBtns.classList.add('hide')
+    scorePage.classList.remove('hide')
+
+    displayHighscores()
+};
+
+// view leader board button on endGame screen
+document.querySelector("#leaderBoard").onclick = function (event) {
+    event.preventDefault();
+    scoreSheetContainer.classList.remove("hidden");
+    console.log(highScores);
+    displayHighscores()
+};
+
+//play again button on endGame screen
+document.querySelector("#playAgain").onclick = function (event) {
+    event.preventDefault();
+    timeLeft = 60;
+    questionIndex = 0;
+
+    
+    scorePage.classList.add("hide")
+    controlBtns.classList.add("hide")
+    quizBox.classList.remove("hide")
+    progressText.classList.remove('hide')
+    timerEl.classList.remove('hide')
+    
+    
+    nextQuestion();
+    timer();
+    progressText.textContent = (questionIndex + 1) + " of " + questions.length;
+};
+
+// save score button on end game screen 
+document.querySelector("#saveScore").onclick = function (event){
+    event.preventDefault()
+    var userName = document.getElementById("userName").value;
+    localStorage.setItem('username', userName);
+
+    var score = localStorage.getItem("score");
+    var userScores = {
+        username: userName,
+        score: score,
+      };
+    localStorage.setItem("userScores", JSON.stringify(userScores));
+    
+    highScores.push(userScores);
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+
+    var endText = document.querySelector("#endText");
+    endText.innerHTML = "SAVED!<br/><br/>Click on View Highscores to see the Leaderboard";
+};
+
+function displayHighscores() {
+    console.log(localStorage.getItem("highScores"));
+    console.log(highScores);
+    if (JSON.parse(localStorage.getItem("highScores")) === null){
+        var li = document.createElement("li");
+        li.className = "high-score";
+        li.innerText = "No Highscores to Display"
+        scoreSheet.append(li);
+    } else {
+        highScores = JSON.parse(localStorage.getItem("highScores"));
+        if (highScores.length >= 2) {
+            highScores.sort((function (a, b) {
+            return b.score - a.score;}))
+        }
+        for (var e = 0; e < highScores.length; e++) {
+            var li = document.createElement("li");
+            li.className = "high-score";
+            li.innerText = highScores[e].username + " : " + highScores[e].score
+            scoreSheet.append(li);
+        }
+    }
+};
