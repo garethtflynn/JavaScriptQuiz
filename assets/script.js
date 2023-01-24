@@ -52,6 +52,32 @@ const questions = [
         choices: ["=", "<=", "===", "!==",], 
         answer: "!=="
     },
+    {
+        question: "How do you write 'Hello World' in an alert box?",
+        choices: ["alertBox('Hello World')", "msgBox('Hello World')", "alert('Hello World')", "console.log('Hellow  World"], 
+        answer: "alert('Hello World')"
+    },
+    {
+        question: "How do you call a function you named myFunction?",
+        choices: ["myFunction()", "callmyFunction()", "callFunction (myfunction)", "All of the Above"],
+        answer: "myFunction()"
+    },
+    {
+        question: "How do you add a comment in Javascript?",
+        choices: [" !!This is a comment", "//This is a comment", "{{This is a comment}}", "<This is a comment>"],
+        answer: "//This is a comment"
+    },
+    {
+        question: "Which event occurs when the user clicks on an HTML element?",
+        choices: ["onClick", "onChange", "onHover", "onSubmit"], 
+        answer: "onClick"
+    },
+    {
+        question: "Which one of these is a Javascript variable?",
+        choices: ["const", "let", "var", "All of the Above"],
+        answer: "All of the Above"
+    },
+
 ]
 
 function nextQuestion () {
